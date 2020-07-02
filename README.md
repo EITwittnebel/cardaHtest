@@ -11,7 +11,8 @@ A sample project for displaying results from the Imgur API, done with an MVC arc
 ## Getting Started
 
 Upon opening the app, an API request goes to imgur for the latest hot/viral images, and an alert is presented if a
-connection is unavailable or some other error occurs. The results are presented in a collection view.
+connection is unavailable or some other error occurs. The results are presented in a collection view. If the user wishes
+to get new results, they may press the refresh button to get more recent images.
 
 
 ## Details Screen
