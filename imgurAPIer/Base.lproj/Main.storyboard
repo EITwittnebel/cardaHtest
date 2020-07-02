@@ -27,14 +27,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="ZaL-Mz-Huo" customClass="CollViewCell" customModule="imgurAPIer" customModuleProvider="target">
-                                        <rect key="frame" x="-20" y="0.0" width="414" height="343"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="343"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bTy-a1-WcC">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="343"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="343"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hez-zS-wAH">
-                                                    <rect key="frame" x="19" y="4" width="376" height="335"/>
+                                                    <rect key="frame" x="-0.5" y="4" width="375" height="335"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="375" id="Gz9-Db-OdU"/>
                                                     </constraints>
@@ -49,7 +49,7 @@
                                                 <constraint firstItem="hez-zS-wAH" firstAttribute="leading" secondItem="bTy-a1-WcC" secondAttribute="leading" priority="750" constant="20" id="npj-hc-xs2"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="414" height="343"/>
+                                        <size key="customSize" width="374" height="343"/>
                                         <connections>
                                             <outlet property="collViewImage" destination="hez-zS-wAH" id="V0w-o6-yKK"/>
                                             <segue destination="ZkO-mt-ojT" kind="showDetail" id="8m5-Yh-zqD"/>

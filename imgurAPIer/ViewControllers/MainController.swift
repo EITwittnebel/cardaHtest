@@ -25,7 +25,7 @@ class MainController: UIViewController {
     guard let senderCell = sender as? UICollectionViewCell,
       let cellPath = imageCollection.indexPath(for: senderCell),
       let dest = segue.destination as? DetailViewController else { return }
-    dest.dataToDisplay = myData[cellPath.section]
+    dest.dataToDisplay = myData[cellPath.row]
   }
   
   @IBAction func refreshButton(_ sender: Any) {
@@ -52,12 +52,12 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! CollViewCell
     
     //Get Image Data
-    if (myData[indexPath.section].image == nil) {
-      AFManager.shared.getImage(imageURL: myData[indexPath.section].imageURL) { result in
+    if (myData[indexPath.row].image == nil) {
+      AFManager.shared.getImage(imageURL: myData[indexPath.row].imageURL) { result in
         switch result {
         case .success(let image):
-          self.myData[indexPath.section].image = image
-          self.imageCollection.reloadSections([indexPath.section])
+          self.myData[indexPath.row].image = image
+          self.imageCollection.reloadItems(at: [indexPath])
         case .failure(let error):
           self.presentErrorAlert(error: error)
         }
@@ -65,16 +65,16 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     //Set Image in UI
-    let currImage = myData[indexPath.section].image ?? UIImage(named: "placeholder.png")
+    let currImage = myData[indexPath.row].image ?? UIImage(named: "placeholder.png")
     cell.collViewImage.image = currImage
     return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 1
+    return myData.count
   }
   
   func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return myData.count
+    return 1
   }
 }
