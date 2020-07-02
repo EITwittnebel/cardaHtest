@@ -25,7 +25,7 @@ class MainController: UIViewController {
     guard let senderCell = sender as? UICollectionViewCell,
       let cellPath = imageCollection.indexPath(for: senderCell),
       let dest = segue.destination as? DetailViewController else { return }
-    dest.dataToDisplay = myData[cellPath.row]
+    dest.dataToDisplay = myData[cellPath.section]
   }
   
   @IBAction func refreshButton(_ sender: Any) {
@@ -52,12 +52,15 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! CollViewCell
     
     //Get Image Data
-    if (myData[indexPath.row].image == nil) {
-      AFManager.shared.getImage(imageURL: myData[indexPath.row].imageURL) { result in
+    if (myData[indexPath.section].image == nil) {
+      AFManager.shared.getImage(imageURL: myData[indexPath.section].imageURL) { result in
         switch result {
         case .success(let image):
-          self.myData[indexPath.row].image = image
-          self.imageCollection.reloadItems(at: [indexPath])
+          self.myData[indexPath.section].image = image
+          DispatchQueue.main.async {
+            let currImage = self.myData[indexPath.section].image ?? UIImage(named: "placeholder.png")
+            cell.collViewImage.image = currImage
+            }
         case .failure(let error):
           self.presentErrorAlert(error: error)
         }
@@ -65,16 +68,30 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     //Set Image in UI
-    let currImage = myData[indexPath.row].image ?? UIImage(named: "placeholder.png")
+    let currImage = myData[indexPath.section].image ?? UIImage(named: "placeholder.png")
     cell.collViewImage.image = currImage
     return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return myData.count
+    return 1
   }
   
   func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 1
+    return myData.count
   }
+    
+}
+
+extension MainController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let item = myData[indexPath.section]
+        let width = collectionView.frame.size.width
+        guard item.width > 0 && item.height > 0 else {
+            return CGSize(width: width, height: width)
+        }
+        let imageRatio = Double(item.height) / Double(item.width)
+        let height = width * CGFloat(imageRatio)
+        return CGSize(width: width, height: height)
+    }
 }
